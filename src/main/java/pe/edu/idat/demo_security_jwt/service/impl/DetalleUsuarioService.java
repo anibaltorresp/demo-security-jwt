@@ -1,5 +1,4 @@
 package pe.edu.idat.demo_security_jwt.service.impl;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -30,22 +29,24 @@ public class DetalleUsuarioService implements UserDetailsService {
         return getUserDetails(usuario,
                 getAuthorities(usuario.getRoles()));
     }
-    private List<GrantedAuthority> getAuthorities(Set<Rol> roles){
+
+    public List<GrantedAuthority> getAuthorities(Set<Rol> roles){
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Rol rol : roles){
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+rol.getNomrol()));
+            authorities.add(new SimpleGrantedAuthority(
+                    "ROLE_"+rol.getNomrol()));
         }
-        return authorities;
+        return  authorities;
     }
-    private UserDetails getUserDetails(Usuario usuario, List<GrantedAuthority> authorities){
-
-    return new User(
-            usuario.getNomusuario(),
-            usuario.getPassword(),
-            usuario.getActivo(),
-            true,
-            true,
-            true, authorities);
-
+    private UserDetails getUserDetails(Usuario usuario,
+                                       List<GrantedAuthority>
+                                               authorities){
+        return new User(
+                usuario.getNomusuario(),
+                usuario.getPassword(),
+                usuario.getActivo(),
+                true,
+                true,
+                true, authorities);
     }
 }
